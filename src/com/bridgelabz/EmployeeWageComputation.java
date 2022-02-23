@@ -1,5 +1,5 @@
 /**
- * Check Employee is Present or Absent
+ * Calculate Part Time employee wage
  */
 package com.bridgelabz;
 
@@ -10,9 +10,9 @@ public class EmployeeWageComputation {
         /**
          * passing values through constructor and calculating employee daily wage
          */
-        Employee employee = new Employee(EmployeeType.FULL_TIME, 8, 20);
+        Employee employee = new Employee(EmployeeType.PART_TIME, 4, 20);
         System.out.println("Employee is "+(employee.isPresent() ? "Present" : "Absent"));
 
-        System.out.println("Employee Daily Wage: "+employee.getEmpHrs() * employee.getWagePerHr());
+        System.out.println("Part Time Daily Employee Wage: "+employee.getEmpHrs() * employee.getWagePerHr());
     }
 }
