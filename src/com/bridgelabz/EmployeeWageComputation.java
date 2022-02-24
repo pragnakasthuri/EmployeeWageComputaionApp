@@ -1,7 +1,3 @@
-/**
- * Calculate Wages till a condition of
- * total working hours or days is reached for a month
- */
 package com.bridgelabz;
 
 public class EmployeeWageComputation {
@@ -15,15 +11,22 @@ public class EmployeeWageComputation {
     private static final int MAX_NO_OF_WORKING_DAYS = 20;
 
     public static void main(String[] args) {
-        /**
-         * passing values through constructor and using while loop for checking condition
-         */
-        Employee employee = new Employee(EmployeeType.FULL_TIME, 8, 20);
+        Employee employee = new Employee(EmployeeType.FULL_TIME, 0, 20);
+        computeAndPrintEmployeeWage(employee);
+    }
+
+    /**
+     * @param employee and prints the employee monthly wage based on condition
+     */
+    private static void computeAndPrintEmployeeWage(Employee employee) {
         while (employee.getEmpHrs() <= MAX_NUM_OF_HRS && employee.getTotalNoOfWorkingDays() <= MAX_NO_OF_WORKING_DAYS ){
             if (employee.isPresent()) {
                 switch (employee.getEmployeeType()) {
                     case FULL_TIME:
                         employee.setEmpHrs(employee.getEmpHrs() + FUL_TIME_HRS);
+                        if (employee.getEmpHrs() > 100) {
+                            employee.setEmpHrs(100);
+                        }
                         break;
                     case PART_TIME:
                         employee.setEmpHrs(employee.getEmpHrs() + PART_TIME_HRS);

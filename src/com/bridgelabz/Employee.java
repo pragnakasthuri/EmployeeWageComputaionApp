@@ -10,6 +10,7 @@ public class Employee {
     private int empHrs;
     private int wagePerHr;
     private int totalNoOfWorkingDays;
+    private String company;
 
     Employee(EmployeeType employeeType, int empHrs, int wagePerHr) {
         this.employeeType = employeeType;
@@ -22,6 +23,26 @@ public class Employee {
      */
     Employee() {
 
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setTotalNoOfWorkingDays(int totalNoOfWorkingDays) {
+        this.totalNoOfWorkingDays = totalNoOfWorkingDays;
+    }
+
+    public void setWagePerHr(int wagePerHr) {
+        this.wagePerHr = wagePerHr;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
     }
 
     public int getEmpHrs() {
@@ -58,4 +79,3 @@ public class Employee {
         return false;
     }
 }
-
