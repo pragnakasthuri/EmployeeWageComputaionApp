@@ -1,32 +1,30 @@
+/**
+ * Calculate employee Wage for multiple companies
+ */
 package com.bridgelabz;
+
+import java.util.Scanner;
 
 public class EmployeeWageComputation {
     /**
      * Declaring constants
      */
-    private static final int MAX_NUM_OF_HRS = 100;
     private static final int FUL_TIME_HRS = 8;
     private static final int PART_TIME_HRS = 4;
-    private static final int WAGE_PER_HR = 20;
-    private static final int MAX_NO_OF_WORKING_DAYS = 20;
 
     public static void main(String[] args) {
-        Employee employee = new Employee(EmployeeType.FULL_TIME, 0, 20);
-        computeAndPrintEmployeeWage(employee);
-    }
+        Scanner scanner = new Scanner(System.in);
+        /**
+         * Here passing values from user input
+         */
+        Employee employee = readEmployeeDetails(scanner);
 
-    /**
-     * @param employee and prints the employee monthly wage based on condition
-     */
-    private static void computeAndPrintEmployeeWage(Employee employee) {
-        while (employee.getEmpHrs() <= MAX_NUM_OF_HRS && employee.getTotalNoOfWorkingDays() <= MAX_NO_OF_WORKING_DAYS ){
+        while (employee.getEmpHrs() <= employee.getMaxHoursPerMonth()
+                && employee.getTotalNoOfEmpWorkingDays() < employee.getNoOfWorkingDaysPerMonth() ){
             if (employee.isPresent()) {
                 switch (employee.getEmployeeType()) {
                     case FULL_TIME:
                         employee.setEmpHrs(employee.getEmpHrs() + FUL_TIME_HRS);
-                        if (employee.getEmpHrs() > 100) {
-                            employee.setEmpHrs(100);
-                        }
                         break;
                     case PART_TIME:
                         employee.setEmpHrs(employee.getEmpHrs() + PART_TIME_HRS);
@@ -37,6 +35,30 @@ public class EmployeeWageComputation {
                 }
             }
         }
-        System.out.println("Employee Monthly Wage : " + employee.getEmpHrs() * WAGE_PER_HR);
+        System.out.println("Employee working days and hours are: "+employee.getTotalNoOfEmpWorkingDays()+","+employee.getEmpHrs());
+        System.out.println("Employee Monthly Wage : " + employee.getEmpHrs() * employee.getWagePerHr());
+    }
+
+    /**
+     * @param scanner
+     * @return The values given by the user as employee object
+     */
+    public static Employee readEmployeeDetails(Scanner scanner) {
+        Employee employee = new Employee();
+
+        System.out.println("Enter company");
+        employee.setCompany(scanner.next());
+        System.out.println("Enter Max working days");
+        employee.setNoOfWorkingDaysPerMonth(scanner.nextInt());
+        System.out.println("Enter Max working hours");
+        employee.setMaxHoursPerMonth(scanner.nextInt());
+        System.out.println("Enter wage per hour");
+        employee.setWagePerHr(scanner.nextInt());
+        System.out.println("Enter employee type: \n1. Full Time\n2. Part Time");
+        int employeeType = scanner.nextInt();
+        employee.setEmployeeType(employeeType == 1 ? EmployeeType.FULL_TIME : EmployeeType.PART_TIME);
+
+        return employee;
     }
 }
+

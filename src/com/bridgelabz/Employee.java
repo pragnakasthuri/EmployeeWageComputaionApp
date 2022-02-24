@@ -9,7 +9,9 @@ public class Employee {
     private EmployeeType employeeType;
     private int empHrs;
     private int wagePerHr;
-    private int totalNoOfWorkingDays;
+    private int maxHoursPerMonth;
+    private int noOfWorkingDaysPerMonth;
+    private int totalNoOfEmpWorkingDays;
     private String company;
 
     Employee(EmployeeType employeeType, int empHrs, int wagePerHr) {
@@ -25,26 +27,6 @@ public class Employee {
 
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public void setTotalNoOfWorkingDays(int totalNoOfWorkingDays) {
-        this.totalNoOfWorkingDays = totalNoOfWorkingDays;
-    }
-
-    public void setWagePerHr(int wagePerHr) {
-        this.wagePerHr = wagePerHr;
-    }
-
-    public void setEmployeeType(EmployeeType employeeType) {
-        this.employeeType = employeeType;
-    }
-
     public int getEmpHrs() {
         return empHrs;
     }
@@ -57,12 +39,15 @@ public class Employee {
         return employeeType;
     }
 
-    public int getTotalNoOfWorkingDays() {
-        return totalNoOfWorkingDays;
+    public int getTotalNoOfEmpWorkingDays() {
+        return totalNoOfEmpWorkingDays;
     }
 
     public void setEmpHrs(int empHrs) {
         this.empHrs = empHrs;
+        if (this.empHrs > this.maxHoursPerMonth) {
+            this.empHrs = this.maxHoursPerMonth;
+        }
     }
 
     /**
@@ -73,9 +58,46 @@ public class Employee {
         Random random = new Random();
         int isPresent = random.nextInt(2);
         if (isPresent == 1) {
-            this.totalNoOfWorkingDays++;
+            this.totalNoOfEmpWorkingDays++;
             return true;
         }
         return false;
     }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public void setWagePerHr(int wagePerHr) {
+        this.wagePerHr = wagePerHr;
+    }
+
+    public int getMaxHoursPerMonth() {
+        return maxHoursPerMonth;
+    }
+
+    public void setMaxHoursPerMonth(int maxHoursPerMonth) {
+        this.maxHoursPerMonth = maxHoursPerMonth;
+    }
+
+    public int getNoOfWorkingDaysPerMonth() {
+        return noOfWorkingDaysPerMonth;
+    }
+
+    public void setNoOfWorkingDaysPerMonth(int noOfWorkingDaysPerMonth) {
+        this.noOfWorkingDaysPerMonth = noOfWorkingDaysPerMonth;
+    }
+
+    public void setTotalNoOfEmpWorkingDays(int totalNoOfEmpWorkingDays) {
+        this.totalNoOfEmpWorkingDays = totalNoOfEmpWorkingDays;
+    }
+
+    public String getCompany() {
+        return company;
+    }
 }
+
