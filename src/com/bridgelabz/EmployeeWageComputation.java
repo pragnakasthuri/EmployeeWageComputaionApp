@@ -56,6 +56,7 @@ public class EmployeeWageComputation {
         employee.setWagePerHr(scanner.nextInt());
         System.out.println("Enter employee type: \n1. Full Time\n2. Part Time");
         int employeeType = scanner.nextInt();
+        scanner.close();
         employee.setEmployeeType(employeeType == 1 ? EmployeeType.FULL_TIME : EmployeeType.PART_TIME);
 
         return employee;
