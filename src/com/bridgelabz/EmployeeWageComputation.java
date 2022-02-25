@@ -72,25 +72,26 @@ class Company {
     }
 }
 
-public class EmployeeWageComputation {
+public class EmployeeWageComputation implements IEmployeeWageComputation{
     /**
      * Declaring constants
      */
     private static final int FUL_TIME_HRS = 8;
     private static final int PART_TIME_HRS = 4;
+    private Company[] companyArray = new Company[1];
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        EmployeeWageComputation employeeWageComputation = new EmployeeWageComputation();
         /**
          * Here passing values from user input
          */
-        Company[] companyArray = new Company[2];
-        companyArray[0] = readEmployeeDetails(scanner);
-        companyArray[1] = readEmployeeDetails(scanner);
+        employeeWageComputation.companyArray[0] = employeeWageComputation.readEmployeeDetails(scanner);
+        //employeeWageComputation.companyArray[1] = employeeWageComputation.readEmployeeDetails(scanner);
 
-        for (int i=0; i<companyArray.length; i++) {
-            Company company = companyArray[i];
-            company.setTotalEmployeeWage(calculateEmployeeWage(company));
+        for (int i=0; i<employeeWageComputation.companyArray.length; i++) {
+            Company company = employeeWageComputation.companyArray[i];
+            company.setTotalEmployeeWage(employeeWageComputation.calculateEmployeeWage(company));
             System.out.println(company);
         }
         scanner.close();
@@ -100,7 +101,7 @@ public class EmployeeWageComputation {
      * @param company
      * @return Employee Wage for a company
      */
-    public static int calculateEmployeeWage(Company company) {
+    public int calculateEmployeeWage(Company company) {
         Employee employee = new Employee();
         employee.setEmployeeType(EmployeeType.FULL_TIME);
         while (employee.getEmpHrs() <= company.getTotalNoOfWorkingDays()
@@ -108,7 +109,11 @@ public class EmployeeWageComputation {
             if (employee.isPresent()) {
                 switch (employee.getEmployeeType()) {
                     case FULL_TIME:
-                        employee.setEmpHrs(employee.getEmpHrs() + FUL_TIME_HRS);
+                        if (employee.getEmpHrs() + FUL_TIME_HRS > company.getMaxWorkingHrsPerMonth()) {
+                            employee.setEmpHrs(company.getMaxWorkingHrsPerMonth());
+                        } else {
+                            employee.setEmpHrs(employee.getEmpHrs() + FUL_TIME_HRS);
+                        }
                         break;
                     case PART_TIME:
                         employee.setEmpHrs(employee.getEmpHrs() + PART_TIME_HRS);
@@ -126,7 +131,7 @@ public class EmployeeWageComputation {
      * @param scanner
      * @return The values given by the user as employee object
      */
-    public static Company readEmployeeDetails(Scanner scanner) {
+    public Company readEmployeeDetails(Scanner scanner) {
         System.out.println("Enter company name");
         String companyName = scanner.next();
         System.out.println("Enter Max working days");
@@ -136,6 +141,16 @@ public class EmployeeWageComputation {
         System.out.println("Enter wage per hour");
         int rate = scanner.nextInt();
         return new Company(companyName, totalNoOfWorkingDays, maxWorkingHrsPerMonth, rate);
+    }
+
+    @Override
+    public int getTotalWage(String companyName) {
+        for(Company company : companyArray) {
+            if (company.getCompanyName().equals(companyName)) {
+                return company.getTotalEmployeeWage();
+            }
+        }
+        return 0;
     }
 }
 
