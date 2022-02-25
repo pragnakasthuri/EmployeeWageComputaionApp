@@ -3,9 +3,7 @@
  */
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class Company {
     private String companyName;
@@ -13,6 +11,7 @@ class Company {
     private int maxWorkingHrsPerMonth;
     private int wagePerHr;
     private int totalEmployeeWage;
+    private Map<Integer, Integer> dailyWage = new HashMap<>();
 
     /**
      * @param companyName
@@ -25,6 +24,14 @@ class Company {
         this.totalNoOfWorkingDays = totalNoOfWorkingDays;
         this.maxWorkingHrsPerMonth = maxWorkingHrsPerMonth;
         this.wagePerHr = wagePerHr;
+    }
+
+    public void setDailyWage(Map<Integer, Integer> dailyWage) {
+        this.dailyWage = dailyWage;
+    }
+
+    public Map<Integer, Integer> getDailyWage() {
+        return dailyWage;
     }
 
     public String getCompanyName() {
@@ -70,7 +77,8 @@ class Company {
     @Override
     public String toString() {
         return this.companyName +
-                ", totalEmployeeWage=" + totalEmployeeWage;
+                ", totalEmployeeWage=" + totalEmployeeWage +
+                ", Daily wage= "+ dailyWage;
     }
 }
 
@@ -109,15 +117,19 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
     public int calculateEmployeeWage(Company company) {
         Employee employee = new Employee();
         employee.setEmployeeType(EmployeeType.FULL_TIME);
+        int day = 0;
         while (employee.getEmpHrs() <= company.getMaxWorkingHrsPerMonth()
                 && employee.getTotalNoOfEmpWorkingDays() < company.getTotalNoOfWorkingDays()) {
             if (employee.isPresent()) {
+                day++;
                 switch (employee.getEmployeeType()) {
                     case FULL_TIME:
                         if (employee.getEmpHrs() + FUL_TIME_HRS > company.getMaxWorkingHrsPerMonth()) {
+                            company.getDailyWage().put(day, (company.getMaxWorkingHrsPerMonth() - employee.getEmpHrs()) * company.getWagePerHr());
                             employee.setEmpHrs(company.getMaxWorkingHrsPerMonth());
                         } else {
                             employee.setEmpHrs(employee.getEmpHrs() + FUL_TIME_HRS);
+                            company.getDailyWage().put(day, FUL_TIME_HRS * company.getWagePerHr());
                         }
                         break;
                     case PART_TIME:
