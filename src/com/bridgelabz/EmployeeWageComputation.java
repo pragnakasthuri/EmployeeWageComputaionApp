@@ -1,8 +1,10 @@
 /**
- * Ability to manage Employee Wage of multiple companies - Note: Refactor to
+ * Refactor to have list of multiple companies to manage Employee Wage using Array List
  */
 package com.bridgelabz;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class Company {
@@ -78,7 +80,11 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
      */
     private static final int FUL_TIME_HRS = 8;
     private static final int PART_TIME_HRS = 4;
-    private Company[] companyArray = new Company[1];
+    private List<Company> companyList = new ArrayList<>();
+
+    public List<Company> getCompanyList() {
+        return companyList;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -86,11 +92,10 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
         /**
          * Here passing values from user input
          */
-        employeeWageComputation.companyArray[0] = employeeWageComputation.readEmployeeDetails(scanner);
+        employeeWageComputation.getCompanyList().add(employeeWageComputation.readEmployeeDetails(scanner));
         //employeeWageComputation.companyArray[1] = employeeWageComputation.readEmployeeDetails(scanner);
 
-        for (int i=0; i<employeeWageComputation.companyArray.length; i++) {
-            Company company = employeeWageComputation.companyArray[i];
+        for (Company company : employeeWageComputation.getCompanyList()) {
             company.setTotalEmployeeWage(employeeWageComputation.calculateEmployeeWage(company));
             System.out.println(company);
         }
@@ -104,8 +109,8 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
     public int calculateEmployeeWage(Company company) {
         Employee employee = new Employee();
         employee.setEmployeeType(EmployeeType.FULL_TIME);
-        while (employee.getEmpHrs() <= company.getTotalNoOfWorkingDays()
-                && employee.getTotalNoOfEmpWorkingDays() < company.getMaxWorkingHrsPerMonth()) {
+        while (employee.getEmpHrs() <= company.getMaxWorkingHrsPerMonth()
+                && employee.getTotalNoOfEmpWorkingDays() < company.getTotalNoOfWorkingDays()) {
             if (employee.isPresent()) {
                 switch (employee.getEmployeeType()) {
                     case FULL_TIME:
@@ -145,7 +150,7 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
 
     @Override
     public int getTotalWage(String companyName) {
-        for(Company company : companyArray) {
+        for(Company company : companyList) {
             if (company.getCompanyName().equals(companyName)) {
                 return company.getTotalEmployeeWage();
             }
