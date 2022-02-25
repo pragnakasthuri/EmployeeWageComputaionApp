@@ -8,16 +8,12 @@ import java.util.Random;
 public class Employee {
     private EmployeeType employeeType;
     private int empHrs;
-    private int wagePerHr;
-    private int maxHoursPerMonth;
-    private int noOfWorkingDaysPerMonth;
     private int totalNoOfEmpWorkingDays;
     private String company;
 
-    Employee(EmployeeType employeeType, int empHrs, int wagePerHr) {
+    Employee(EmployeeType employeeType, int empHrs) {
         this.employeeType = employeeType;
         this.empHrs = empHrs;
-        this.wagePerHr = wagePerHr;
     }
 
     /**
@@ -31,10 +27,6 @@ public class Employee {
         return empHrs;
     }
 
-    public int getWagePerHr() {
-        return wagePerHr;
-    }
-
     public EmployeeType getEmployeeType() {
         return employeeType;
     }
@@ -45,9 +37,6 @@ public class Employee {
 
     public void setEmpHrs(int empHrs) {
         this.empHrs = empHrs;
-        if (this.empHrs > this.maxHoursPerMonth) {
-            this.empHrs = this.maxHoursPerMonth;
-        }
     }
 
     /**
@@ -72,25 +61,6 @@ public class Employee {
         this.employeeType = employeeType;
     }
 
-    public void setWagePerHr(int wagePerHr) {
-        this.wagePerHr = wagePerHr;
-    }
-
-    public int getMaxHoursPerMonth() {
-        return maxHoursPerMonth;
-    }
-
-    public void setMaxHoursPerMonth(int maxHoursPerMonth) {
-        this.maxHoursPerMonth = maxHoursPerMonth;
-    }
-
-    public int getNoOfWorkingDaysPerMonth() {
-        return noOfWorkingDaysPerMonth;
-    }
-
-    public void setNoOfWorkingDaysPerMonth(int noOfWorkingDaysPerMonth) {
-        this.noOfWorkingDaysPerMonth = noOfWorkingDaysPerMonth;
-    }
 
     public void setTotalNoOfEmpWorkingDays(int totalNoOfEmpWorkingDays) {
         this.totalNoOfEmpWorkingDays = totalNoOfEmpWorkingDays;
