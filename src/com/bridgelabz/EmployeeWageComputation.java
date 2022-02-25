@@ -101,12 +101,26 @@ public class EmployeeWageComputation implements IEmployeeWageComputation{
          * Here passing values from user input
          */
         employeeWageComputation.getCompanyList().add(employeeWageComputation.readEmployeeDetails(scanner));
-        //employeeWageComputation.companyArray[1] = employeeWageComputation.readEmployeeDetails(scanner);
-
         for (Company company : employeeWageComputation.getCompanyList()) {
             company.setTotalEmployeeWage(employeeWageComputation.calculateEmployeeWage(company));
             System.out.println(company);
         }
+
+        System.out.println("Enter company name: ");
+        String companyName = scanner.next();
+        boolean isFound = false;
+        for( Company company : employeeWageComputation.getCompanyList()) {
+            if (company.getCompanyName().equals(companyName)) {
+                System.out.println("Total Wage of the company: "+company.getTotalEmployeeWage());
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound) {
+            System.out.println("Company not found!");
+        }
+
+
         scanner.close();
     }
 
